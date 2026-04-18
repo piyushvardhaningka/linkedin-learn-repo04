@@ -1,10 +1,10 @@
-name: Initial Deployment Pipeline
+name: Corrected Deployment Pipeline
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   integration:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: echo "- Lint the code and run unit tests"
-        
+
   build:
     needs: [integration]
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "- Auto-deploy the artifact to the development environment"
-        
+
   staging:
     needs: [development, test-artifact]
     runs-on: ubuntu-latest
@@ -41,13 +41,13 @@ jobs:
           echo "After development envirionment is deployed..."
           echo "and after the artifact tests have passed..."
           echo "- Auto-deploy the artifact to the staging environment"
-        
+
   test-staging:
     needs: [staging]
     runs-on: ubuntu-latest
     steps:
       - run: echo "- Test the staging environment"
-        
+
   production:
     needs: [staging, test-staging]
     runs-on: ubuntu-latest
